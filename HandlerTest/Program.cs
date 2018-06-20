@@ -15,13 +15,7 @@ namespace HandlerTest
 
             try
             {
-                Console.Write("请选择运行模式：1，服务端；2，客户端  ");
-                var ch = Console.ReadKey().KeyChar;
-                Console.WriteLine();
-                if (ch == '1')
-                    TestServer();
-                else
-                    TestClient();
+                TestClient();
             }
             catch (Exception ex)
             {
@@ -33,31 +27,6 @@ namespace HandlerTest
         }
 
         static TimerX _timer;
-        static NetServer _server;
-        static void TestServer()
-        {
-            // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
-            var svr = new NetServer
-            {
-                Port = 1234,
-                Log = XTrace.Log
-            };
-            //svr.Add(new LengthFieldCodec { Size = 4 });
-            svr.Add<StandardCodec>();
-            svr.Add<EchoHandler>();
-
-            // 打开原始数据日志
-            var ns = svr.Server;
-            ns.LogSend = true;
-            ns.LogReceive = true;
-
-            svr.Start();
-
-            _server = svr;
-
-            // 定时显示性能数据
-            _timer = new TimerX(ShowStat, svr, 100, 1000);
-        }
 
         static void TestClient()
         {
