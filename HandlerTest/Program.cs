@@ -15,7 +15,13 @@ namespace HandlerTest
 
             try
             {
-                TestClient();
+                Console.Write("请选择运行模式：1，服务端；2，客户端  ");
+                var ch = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                if (ch == '1')
+                    TestServer();
+                else
+                    TestClient();
             }
             catch (Exception ex)
             {
@@ -27,11 +33,36 @@ namespace HandlerTest
         }
 
         static TimerX _timer;
-        
+        static NetServer _server;
+        static void TestServer()
+        {
+            // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
+            var svr = new NetServer
+            {
+                Port = 1234,
+                Log = XTrace.Log
+            };
+            //svr.Add(new LengthFieldCodec { Size = 4 });
+            svr.Add<StandardCodec>();
+            svr.Add<EchoHandler>();
+
+            // 打开原始数据日志
+            var ns = svr.Server;
+            ns.LogSend = true;
+            ns.LogReceive = true;
+
+            svr.Start();
+
+            _server = svr;
+
+            // 定时显示性能数据
+            _timer = new TimerX(ShowStat, svr, 100, 1000);
+        }
+
         static void TestClient()
         {
-            //var uri = new NetUri("tcp://127.0.0.1:1234");
-            var uri = new NetUri("tcp://www.armku.com:1234");
+            var uri = new NetUri("tcp://127.0.0.1:1234");
+            //var uri = new NetUri("tcp://net.newlifex.com:1234");
             var client = uri.CreateRemote();
             client.Log = XTrace.Log;
             client.Received += (s, e) =>
@@ -40,7 +71,7 @@ namespace HandlerTest
                 XTrace.WriteLine("收到：{0}", pk.ToStr());
             };
             //client.Add(new LengthFieldCodec { Size = 4 });
-            client.Add<StandardCodecDemo>();
+            client.Add<StandardCodec>();
 
             // 打开原始数据日志
             var ns = client;
@@ -53,7 +84,7 @@ namespace HandlerTest
             _timer = new TimerX(ShowStat, client, 100, 1000);
 
             // 循环发送数据
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 5; i++)
             {
                 var str = "你好" + (i + 1);
                 var pk = new Packet(str.GetBytes());

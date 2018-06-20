@@ -1,103 +1,112 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NewLife;
-using NewLife.Agent;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Net.Handlers;
-using HandlerTest;
+using NewLife.Threading;
 
-namespace EchoAgent
+namespace HandlerTest
 {
     class Program
     {
         static void Main(String[] args)
         {
-            // 引导进入我的服务控制类
-            MyService.ServiceMain();
+            XTrace.UseConsole();
+
+            try
+            {
+                Console.Write("请选择运行模式：1，服务端；2，客户端  ");
+                var ch = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                if (ch == '1')
+                    TestServer();
+                else
+                    TestClient();
+            }
+            catch (Exception ex)
+            {
+                XTrace.WriteException(ex);
+            }
+
+            Console.WriteLine("OK!");
+            Console.ReadKey();
         }
-    }
 
-    class MyService : AgentServiceBase<MyService>
-    {
-        public MyService()
-        {
-            ServiceName = "EchoAgent";
-            DisplayName = "回声服务";
-            Description = "这是NewLife.Net的一个回声服务示例！";
-
-            // 准备两个工作线程，分别负责输出日志和向客户端发送时间
-            //ThreadCount = 2;
-            ThreadCount = 1;
-            Intervals = new[] { 1, 5 };
-        }
-
-        MyNetServer _Server;
-        /// <summary>开始服务</summary>
-        /// <param name="reason"></param>
-        protected override void StartWork(String reason)
+        static TimerX _timer;
+        static NetServer _server;
+        static void TestServer()
         {
             // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
-            var svr = new MyNetServer
+            var svr = new NetServer
             {
                 Port = 1234,
                 Log = XTrace.Log
             };
-            svr.Add<StandardCodecDemo>();
+            //svr.Add(new LengthFieldCodec { Size = 4 });
+            svr.Add<StandardCodec>();
             svr.Add<EchoHandler>();
+
+            // 打开原始数据日志
+            var ns = svr.Server;
+            ns.LogSend = true;
+            ns.LogReceive = true;
+
             svr.Start();
 
-            _Server = svr;
+            _server = svr;
 
-            base.StartWork(reason);
+            // 定时显示性能数据
+            _timer = new TimerX(ShowStat, svr, 100, 1000);
         }
 
-        /// <summary>停止服务</summary>
-        /// <param name="reason"></param>
-        protected override void StopWork(String reason)
+        static void TestClient()
         {
-            _Server.TryDispose();
-            _Server = null;
-
-            base.StopWork(reason);
-        }
-
-        /// <summary>调度器让每个任务线程定时执行Work，index标识任务</summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public override Boolean Work(Int32 index)
-        {
-            switch (index)
+            var uri = new NetUri("tcp://127.0.0.1:1234");
+            //var uri = new NetUri("tcp://net.newlifex.com:1234");
+            var client = uri.CreateRemote();
+            client.Log = XTrace.Log;
+            client.Received += (s, e) =>
             {
-                case 0: ShowStat(_Server); break;
-                case 1: SendTime(_Server); break;
+                var pk = e.Message as Packet;
+                XTrace.WriteLine("收到：{0}", pk.ToStr());
+            };
+            //client.Add(new LengthFieldCodec { Size = 4 });
+            client.Add<StandardCodec>();
+
+            // 打开原始数据日志
+            var ns = client;
+            ns.LogSend = true;
+            ns.LogReceive = true;
+
+            client.Open();
+
+            // 定时显示性能数据
+            _timer = new TimerX(ShowStat, client, 100, 1000);
+
+            // 循环发送数据
+            for (var i = 0; i < 5; i++)
+            {
+                var str = "你好" + (i + 1);
+                var pk = new Packet(str.GetBytes());
+                client.SendMessageAsync(pk);
             }
-            return false;
         }
 
-        private String _last;
-        /// <summary>显示服务端状态</summary>
-        /// <param name="ns"></param>
-        private void ShowStat(NetServer ns)
+        class User
         {
-            var msg = ns.GetStat();
-            if (msg == _last) return;
-
-            _last = msg;
-
-            //WriteLog(msg);
+            public Int32 ID { get; set; }
+            public String Name { get; set; }
         }
 
-        /// <summary>向所有客户端发送时间</summary>
-        /// <param name="ns"></param>
-        private void SendTime(NetServer ns)
+        static void ShowStat(Object state)
         {
-            var str = DateTime.Now.ToFullString() + Environment.NewLine;
-            var buf = str.GetBytes();
-           // ns.SendAllAsync(buf);
+            var msg = "";
+            if (state is NetServer ns)
+                msg = ns.GetStat();
+            else if (state is ISocketRemote ss)
+                msg = ss.GetStat();
+
+            Console.Title = msg;
         }
     }
 }
