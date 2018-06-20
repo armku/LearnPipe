@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAgent", "EchoAgent\EchoAgent.csproj", "{43C581A2-C376-4145-9029-9916FA1E6D02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerServer", "EchoAgent\HandlerServer.csproj", "{43C581A2-C376-4145-9029-9916FA1E6D02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerTest", "HandlerTest\HandlerTest.csproj", "{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerClient", "HandlerTest\HandlerClient.csproj", "{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewLife.Core", "NewLife.Core\NewLife.Core.csproj", "{5813C22E-EEB3-4DEE-A45C-BB218041193A}"
 EndProject

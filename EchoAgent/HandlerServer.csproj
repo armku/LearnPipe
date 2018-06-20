@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HandlerTest\HandlerTest.csproj">
+    <ProjectReference Include="..\HandlerTest\HandlerClient.csproj">
       <Project>{2b0f788d-9bc7-4af6-99c6-85c9344ff6ec}</Project>
-      <Name>HandlerTest</Name>
+      <Name>HandlerClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\NewLife.Core\NewLife.Core.csproj">
       <Project>{5813c22e-eeb3-4dee-a45c-bb218041193a}</Project>
