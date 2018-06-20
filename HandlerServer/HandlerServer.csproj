@@ -52,7 +52,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HandlerTest\HandlerClient.csproj">
+    <ProjectReference Include="..\HandlerClient\HandlerClient.csproj">
       <Project>{2b0f788d-9bc7-4af6-99c6-85c9344ff6ec}</Project>
       <Name>HandlerClient</Name>
     </ProjectReference>
