@@ -34,10 +34,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=7.0.6707.38036, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
@@ -61,6 +57,10 @@
     <ProjectReference Include="..\HandlerTest\HandlerTest.csproj">
       <Project>{2b0f788d-9bc7-4af6-99c6-85c9344ff6ec}</Project>
       <Name>HandlerTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewLife.Core\NewLife.Core.csproj">
+      <Project>{5813c22e-eeb3-4dee-a45c-bb218041193a}</Project>
+      <Name>NewLife.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
