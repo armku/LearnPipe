@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerClient", "HandlerCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerServer", "HandlerServer\HandlerServer.csproj", "{43C581A2-C376-4145-9029-9916FA1E6D02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppPipeLine", "ConsoleAppPipeLine\ConsoleAppPipeLine.csproj", "{1292EBA3-576B-418C-A019-1DEB64F05879}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|x64.Build.0 = Release|Any CPU
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|x86.ActiveCfg = Release|Any CPU
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|x86.Build.0 = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|x64.Build.0 = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Debug|x86.Build.0 = Debug|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|x64.ActiveCfg = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|x64.Build.0 = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|x86.ActiveCfg = Release|Any CPU
+		{1292EBA3-576B-418C-A019-1DEB64F05879}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
