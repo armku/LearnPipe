@@ -7,7 +7,7 @@
     <ProjectGuid>{43C581A2-C376-4145-9029-9916FA1E6D02}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>EchoAgent</RootNamespace>
-    <AssemblyName>EchoAgent</AssemblyName>
+    <AssemblyName>HandlerServer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
