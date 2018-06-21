@@ -63,9 +63,9 @@ namespace HandlerTest
         {
             var msg = "";
             if (state is NetServer ns)
-                msg = ns.GetStat();
+                msg = "NetServer " + ns.GetStat();
             else if (state is ISocketRemote ss)
-                msg = ss.GetStat();
+                msg = "ISocketRemote " + ss.GetStat();
 
             Console.Title = msg;
         }
